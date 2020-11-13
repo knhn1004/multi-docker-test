@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t chz1004/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true chz1004/react-test npm test
+
+after_success:
+  - docker build -t chz1004/multi-test-client ./client
+  - docker build -t chz1004/multi-test-nginx ./nginx
+  - docker build -t chz1004/multi-test-server ./server
+  - docker build -t chz1004/multi-test-worker ./worker
+
+  # log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" |  docker login -u "$DOCKER_ID" --password-stdin
+
+  # take those images and push them to docker hub
+  - docker push chz1004/multi-test-client
+  - docker push chz1004/multi-test-nginx
+  - docker push chz1004/multi-test-server
+  - docker push chz1004/multi-test-worker
