@@ -22,3 +22,15 @@ after_success:
   - docker push chz1004/multi-test-nginx
   - docker push chz1004/multi-test-server
   - docker push chz1004/multi-test-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: ap-southeast-1
+  app: multi-docker-test
+  env: MultiDockerTest-env
+  bucket_name: elasticbeanstalk-ap-southeast-1-617671456373
+  bucket_path: multi-docker-test
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
