@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <div style={{ margin: '30px auto', width: '80%' }}>
-        <h1>Fib Calculator</h1>
+        <h1>Fib Calculator (Updated)</h1>
         <header>
           <Link to="/">Home</Link>
           &nbsp; | &nbsp;
